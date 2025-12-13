@@ -53,7 +53,7 @@ onMounted(() => {
 <template>
     <dialog
         ref="dialogRef"
-        class="fixed h-full w-full bg-gray-900/50 flex items-center justify-center"
+        class="m-0 p-0 border-0 bg-transparent w-full h-full max-w-screen max-h-screen flex items-center justify-center"
         @click="handleBackdropClick"
         @close="isOpen = false"
     >
@@ -72,3 +72,9 @@ onMounted(() => {
         </div>
     </dialog>
 </template>
+
+<style scoped>
+dialog::backdrop {
+    background-color: rgba(17, 24, 39, 0.5);
+}
+</style>

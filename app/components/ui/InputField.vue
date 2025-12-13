@@ -6,6 +6,7 @@ withDefaults(
         label: string;
         modelValue?: string;
         disabled?: boolean;
+        errorText?: string;
     }>(),
     {
         type: "text",
@@ -20,6 +21,7 @@ const emit = defineEmits<{
 }>();
 
 const fieldId = `input-field-${Math.random().toString(36).substring(2, 15)}`;
+const errorId = `input-error-${Math.random().toString(36).substring(2, 15)}`;
 </script>
 
 <template>
@@ -32,7 +34,21 @@ const fieldId = `input-field-${Math.random().toString(36).substring(2, 15)}`;
             :value="modelValue"
             @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
             :disabled="disabled"
-            class="w-full rounded-md border border-gray-200 px-3 md:px-4 py-2 md:py-3 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
+            :aria-invalid="errorText ? 'true' : 'false'"
+            :aria-describedby="errorText ? errorId : undefined"
+            :class="[
+                'w-full rounded-md border px-3 md:px-4 py-2 md:py-3 text-sm disabled:opacity-70 disabled:cursor-not-allowed',
+                errorText ? 'border-red-500' : 'border-gray-200',
+            ]"
         />
+        <span
+            v-if="errorText"
+            :id="errorId"
+            role="alert"
+            aria-live="polite"
+            class="text-red-500 text-xs"
+        >
+            {{ errorText }}
+        </span>
     </div>
 </template>
