@@ -1,5 +1,13 @@
 <script setup lang="ts">
+const { calculate } = useTaxCalculate();
+
 const isModalOpen = ref(false);
+const formData = reactive({
+    productName: "",
+    netPrice: "",
+    currency: "PLN",
+    vatRate: "",
+});
 
 const vatOptions = [
     { value: "23%", label: "23%" },
@@ -17,6 +25,10 @@ const vatOptions = [
 async function submitForm() {
     try {
         isModalOpen.value = true;
+        const netPrice = Number(formData.netPrice);
+
+        const { gross, tax } = calculate(netPrice, formData.vatRate);
+        console.log(gross, tax);
     } catch (error) {
         console.error(error);
     }
@@ -26,9 +38,20 @@ async function submitForm() {
 <template>
     <form class="flex flex-col gap-8" @submit.prevent="submitForm">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <InputField label="Nazwa produktu" type="text" placeholder="Wpisz nazwę produktu" />
-            <InputField label="Kwota netto" type="number" placeholder="Wpisz kwotę netto" />
             <InputField
+                v-model="formData.productName"
+                label="Nazwa produktu"
+                type="text"
+                placeholder="Wpisz nazwę produktu"
+            />
+            <InputField
+                v-model="formData.netPrice"
+                label="Kwota netto"
+                type="number"
+                placeholder="Wpisz kwotę netto"
+            />
+            <InputField
+                v-model="formData.currency"
                 label="Waluta"
                 type="text"
                 placeholder="Wprowadź walutę"
@@ -36,7 +59,7 @@ async function submitForm() {
                 disabled
             />
 
-            <SelectField label="Stawka VAT" :options="vatOptions" />
+            <SelectField v-model="formData.vatRate" label="Stawka VAT" :options="vatOptions" />
         </div>
 
         <div class="flex justify-center">
@@ -44,10 +67,10 @@ async function submitForm() {
         </div>
     </form>
 
-    <Modal :open="isModalOpen" @close="isModalOpen = false">
+    <!-- <Modal :open="isModalOpen" @close="isModalOpen = false">
         <p>
             cena produktu [nazwa produktu], wynosi : [wyliczona kwota brutto] zł brutto , kwota
             podatku to [wyliczona kwota podatku] zł.
         </p>
-    </Modal>
+    </Modal> -->
 </template>
