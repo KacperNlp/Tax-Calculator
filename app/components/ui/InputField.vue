@@ -4,16 +4,20 @@ withDefaults(
         type: string;
         placeholder: string;
         label: string;
-        value?: string;
+        modelValue?: string;
         disabled?: boolean;
     }>(),
     {
         type: "text",
         placeholder: "",
-        value: "",
+        modelValue: "",
         disabled: false,
     }
 );
+
+const emit = defineEmits<{
+    (e: "update:modelValue", value: string): void;
+}>();
 
 const fieldId = `input-field-${Math.random().toString(36).substring(2, 15)}`;
 </script>
@@ -25,7 +29,8 @@ const fieldId = `input-field-${Math.random().toString(36).substring(2, 15)}`;
             :id="fieldId"
             :type="type"
             :placeholder="placeholder"
-            :value="value"
+            :value="modelValue"
+            @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)"
             :disabled="disabled"
             class="w-full rounded-md border border-gray-200 px-3 md:px-4 py-2 md:py-3 text-sm disabled:opacity-70 disabled:cursor-not-allowed"
         />
