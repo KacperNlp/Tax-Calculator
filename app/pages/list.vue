@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const { error: errorToast, success: successToast } = useToast();
+
 const calculations = ref<any[]>([]);
 const isLoading = ref(true);
 
@@ -9,6 +11,7 @@ async function getCalculations() {
     } catch (error) {
         console.error(error);
         calculations.value = [];
+        errorToast("Wystąpił błąd podczas ładowania danych. Spróbuj ponownie.", 3000);
     }
 }
 
@@ -27,8 +30,11 @@ async function deleteCalculation(id: number) {
         });
 
         await getCalculations();
+
+        successToast("Dane zostały usunięte.", 3000);
     } catch (error: any) {
         console.error(error);
+        errorToast("Wystąpił błąd podczas usuwania danych. Spróbuj ponownie.", 3000);
     }
 }
 

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const { calculate } = useTaxCalculate();
+const { success: successToast, error: errorToast } = useToast();
 
 const isModalOpen = ref(false);
 const gross = ref(0);
@@ -142,8 +143,13 @@ async function submitForm() {
         });
 
         isModalOpen.value = true;
+        successToast("Dane zostały zapisane pomyślnie.", 3000);
     } catch (error) {
         console.error(error);
+        errorToast(
+            "Wystąpił błąd podczas zapisywanie lub przetwarzanie danych. Spróbuj ponownie.",
+            3000
+        );
     }
 }
 </script>
