@@ -22,3 +22,10 @@ logs
 .env
 .env.*
 !.env.example
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+db.sqlite
+db.sqlite3

@@ -1,19 +1,26 @@
 {
-  "name": "tax_calculator",
-  "type": "module",
-  "private": true,
-  "scripts": {
-    "build": "nuxt build",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "postinstall": "nuxt prepare"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.1.18",
-    "nuxt": "^4.2.2",
-    "tailwindcss": "^4.1.18",
-    "vue": "^3.5.25",
-    "vue-router": "^4.6.3"
-  }
+    "name": "tax_calculator",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "build": "nuxt build",
+        "dev": "nuxt dev",
+        "generate": "nuxt generate",
+        "preview": "nuxt preview",
+        "postinstall": "nuxt prepare",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate"
+    },
+    "dependencies": {
+        "@tailwindcss/vite": "^4.1.18",
+        "better-sqlite3": "^12.5.0",
+        "drizzle-orm": "^0.45.1",
+        "nuxt": "^4.2.2",
+        "tailwindcss": "^4.1.18",
+        "vue": "^3.5.25",
+        "vue-router": "^4.6.3"
+    },
+    "devDependencies": {
+        "drizzle-kit": "^0.31.8"
+    }
 }

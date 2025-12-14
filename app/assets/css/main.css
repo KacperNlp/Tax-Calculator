@@ -3,3 +3,11 @@
 .container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
+
+.table-header-cell {
+    @apply px-4 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700;
+}
+
+.table-cell {
+    @apply whitespace-nowrap px-4 py-3 text-sm text-gray-900;
+}
