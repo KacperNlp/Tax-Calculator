@@ -133,7 +133,7 @@ async function submitForm() {
         gross.value = grossValue;
         tax.value = taxValue;
 
-        await $fetch("/api/calculator", {
+        const response = await $fetch("/api/calculator", {
             method: "POST",
             body: {
                 ...formData,
@@ -143,13 +143,14 @@ async function submitForm() {
         });
 
         isModalOpen.value = true;
-        successToast("Dane zostały zapisane pomyślnie.", 3000);
-    } catch (error) {
+        const message = response.statusMessage || "Dane zostały zapisane pomyślnie.";
+        successToast(message, 3000);
+    } catch (error: any) {
         console.error(error);
-        errorToast(
-            "Wystąpił błąd podczas zapisywanie lub przetwarzanie danych. Spróbuj ponownie.",
-            3000
-        );
+        const message =
+            error.data?.statusMessage ||
+            "Wystąpił błąd podczas zapisywanie lub przetwarzanie danych. Spróbuj ponownie.";
+        errorToast(message, 3000);
     }
 }
 </script>
@@ -196,7 +197,7 @@ async function submitForm() {
     <Modal :open="isModalOpen" @close="isModalOpen = false">
         <p>
             cena produktu <strong>{{ formData.productName }}</strong
-            >, wynosi : <strong>{{ gross }} zł brutto</strong>, kwota podatku to
+            >, wynosi: <strong>{{ gross }} zł brutto</strong>, kwota podatku to
             <strong>{{ tax }} zł</strong>.
         </p>
     </Modal>

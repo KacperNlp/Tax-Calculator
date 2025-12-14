@@ -13,7 +13,7 @@ export default defineEventHandler(async (event) => {
     } catch (error) {
         throw createError({
             statusCode: 500,
-            statusMessage: "Failed to fetch calculations",
+            statusMessage: "Wystąpił błąd podczas ładowania danych. Spróbuj ponownie.",
             data: error,
         });
     }

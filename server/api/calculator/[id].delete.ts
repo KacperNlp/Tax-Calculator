@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
         if (!id) {
             throw createError({
                 statusCode: 400,
-                statusMessage: "ID is required",
+                statusMessage: "ID jest wymagany",
             });
         }
 
@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
         if (isNaN(idNumber) || idNumber <= 0) {
             throw createError({
                 statusCode: 400,
-                statusMessage: "Invalid ID format",
+                statusMessage: "Nieprawidłowy format ID",
             });
         }
 
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
         if (existing.length === 0) {
             throw createError({
                 statusCode: 404,
-                statusMessage: "Calculation not found",
+                statusMessage: "Dane nie zostały znalezione",
             });
         }
 
@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
 
         return {
             status: 200,
-            message: "Calculation deleted successfully",
+            statusMessage: "Dane zostały usunięte",
         };
     } catch (error: any) {
         if (error.statusCode) {
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
 
         throw createError({
             statusCode: 500,
-            statusMessage: "Failed to delete calculation",
+            statusMessage: "Wystąpił błąd podczas usuwania danych. Spróbuj ponownie.",
             data: error,
         });
     }

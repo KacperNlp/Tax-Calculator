@@ -25,16 +25,19 @@ function formatDate(date: string) {
 
 async function deleteCalculation(id: number) {
     try {
-        await $fetch(`/api/calculator/${id}`, {
+        const response = await $fetch(`/api/calculator/${id}`, {
             method: "DELETE",
         });
 
         await getCalculations();
 
-        successToast("Dane zostały usunięte.", 3000);
+        const message = response.statusMessage || "Dane zostały usunięte.";
+        successToast(message, 3000);
     } catch (error: any) {
         console.error(error);
-        errorToast("Wystąpił błąd podczas usuwania danych. Spróbuj ponownie.", 3000);
+        const message =
+            error.data?.statusMessage || "Wystąpił błąd podczas usuwania danych. Spróbuj ponownie.";
+        errorToast(message, 3000);
     }
 }
 
