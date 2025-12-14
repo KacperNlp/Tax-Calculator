@@ -53,20 +53,30 @@ onMounted(() => {
 <template>
     <dialog
         ref="dialogRef"
-        class="m-0 p-0 border-0 bg-transparent w-full h-full max-w-screen max-h-screen flex items-center justify-center"
+        class="modal-dialog"
         @click="handleBackdropClick"
         @close="isOpen = false"
     >
         <div
-            class="relative w-full max-h-[90vh] max-w-[90vw] md:max-w-2xl overflow-y-auto p-6 lg:p-12 bg-white rounded-xl shadow-lg"
+            class="relative mx-auto my-0 w-full max-w-[90vw] max-h-[90vh] rounded-xl bg-white p-6 shadow-xl md:max-w-2xl lg:p-12"
+            @click.stop
         >
             <button
                 type="button"
-                class="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900"
-                @click="closeModal"
+                class="absolute right-[-10px] top-[-10px] z-10 flex h-8 w-8 items-center justify-center rounded-full bg-gray-100 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-gray-300 cursor-pointer"
+                @click.stop="closeModal"
                 aria-label="Zamknij"
             >
-                Zamknij modal
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    class="h-5 w-5"
+                >
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
             <slot />
         </div>
@@ -74,7 +84,32 @@ onMounted(() => {
 </template>
 
 <style scoped>
-dialog::backdrop {
+.modal-dialog {
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: transparent;
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100vw;
+    max-height: 100vh;
+    z-index: 50;
+}
+
+.modal-dialog:not([open]) {
+    display: none;
+}
+
+.modal-dialog[open] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-dialog::backdrop {
     background-color: rgba(17, 24, 39, 0.5);
+    backdrop-filter: blur(4px);
 }
 </style>

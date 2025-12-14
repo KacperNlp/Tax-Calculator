@@ -30,7 +30,7 @@ onMounted(async () => {
 
 <template>
     <main class="flex min-h-screen justify-center px-4 py-8">
-        <section class="w-full max-w-5xl" aria-describedby="price-calculator-form-headline">
+        <section class="w-full max-w-6xl" aria-describedby="price-calculator-form-headline">
             <h1 class="text-2xl lg:text-3xl mb-8 lg:mb-12" id="price-calculator-form-headline">
                 Lista obliczeń
             </h1>
@@ -50,6 +50,7 @@ onMounted(async () => {
                             <th class="table-header-cell">Kwota podatku</th>
                             <th class="table-header-cell">IP</th>
                             <th class="table-header-cell">Data utworzenia</th>
+                            <th class="table-header-cell"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -81,6 +82,12 @@ onMounted(async () => {
                             </td>
                             <td class="table-cell">
                                 {{ formatDate(calculation.createdAt) }}
+                            </td>
+                            <td class="table-cell">
+                                <div class="flex gap-2">
+                                    <Action variant="danger" size="sm">Usuń</Action>
+                                    <Action variant="primary" size="sm">Edytuj</Action>
+                                </div>
                             </td>
                         </tr>
                     </tbody>

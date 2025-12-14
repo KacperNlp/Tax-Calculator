@@ -108,6 +108,12 @@ watch(
     }
 );
 
+watch(isModalOpen, (newValue) => {
+    if (!newValue) {
+        resetForm();
+    }
+});
+
 async function submitForm() {
     try {
         isSubmitted.value = true;
@@ -136,7 +142,6 @@ async function submitForm() {
         });
 
         isModalOpen.value = true;
-        resetForm();
     } catch (error) {
         console.error(error);
     }
@@ -178,7 +183,7 @@ async function submitForm() {
         </div>
 
         <div class="flex justify-center">
-            <Action>Oblicz</Action>
+            <Action variant="primary" size="md">Oblicz</Action>
         </div>
     </form>
 
