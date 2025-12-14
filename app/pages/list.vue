@@ -1,13 +1,14 @@
 <script setup lang="ts">
 const calculations = ref<any[]>([]);
-const isLoading = ref(false);
+const isLoading = ref(true);
 
 async function getCalculations() {
     try {
-        const { data } = await useFetch("/api/calculator");
-        calculations.value = data.value?.data || [];
+        const response = await $fetch("/api/calculator");
+        calculations.value = response.data || [];
     } catch (error) {
         console.error(error);
+        calculations.value = [];
     }
 }
 
@@ -17,6 +18,18 @@ function formatDate(date: string) {
         month: "2-digit",
         year: "numeric",
     });
+}
+
+async function deleteCalculation(id: number) {
+    try {
+        await $fetch(`/api/calculator/${id}`, {
+            method: "DELETE",
+        });
+
+        await getCalculations();
+    } catch (error: any) {
+        console.error(error);
+    }
 }
 
 onMounted(async () => {
@@ -85,8 +98,12 @@ onMounted(async () => {
                             </td>
                             <td class="table-cell">
                                 <div class="flex gap-2">
-                                    <Action variant="danger" size="sm">Usuń</Action>
-                                    <Action variant="primary" size="sm">Edytuj</Action>
+                                    <Action
+                                        variant="danger"
+                                        size="sm"
+                                        @click="deleteCalculation(calculation.id)"
+                                        >Usuń</Action
+                                    >
                                 </div>
                             </td>
                         </tr>
